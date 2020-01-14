@@ -14,14 +14,14 @@ var particleVelocities;
 var particleLifespans;
 
 // constraints
-var maxFireworkParticles = 30000;
-var maxParticleCountPerExplosion = 500;
+var maxFireworkParticles = 20000;
+var maxParticleCountPerExplosion = 400;
 var minParticleSlotsFreeBeforeSpawn = 20;
 var maxParticleVelocity = 3;
-var minParticleVelocity = 1;
+var minParticleVelocity = 0.75;
 var minParticleLifespan = 70;
 var maxParticleLifespan = 200;
-var maxParticleRadius = 20;
+var maxParticleRadius = 10;
 
 // environment
 var gravityAcc = 0.02;
@@ -116,8 +116,8 @@ function update() {
         positionY
       );
 
+      // spawn with velacities at different angles
       var angle = Math.PI * 2 * (i / slotsToPopulate.length);
-
       particleVelocities[slotsToPopulate[i]] = new Vector2(
         Math.cos(angle) * (minParticleVelocity + Math.random() * (maxParticleVelocity - minParticleVelocity)),
         Math.sin(angle) * (minParticleVelocity + Math.random() * (maxParticleVelocity - minParticleVelocity))
@@ -152,5 +152,4 @@ function render(c) {
 
     }
   }
-
 }
