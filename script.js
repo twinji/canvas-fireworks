@@ -13,17 +13,18 @@ var particlePositions;
 var particleVelocities;
 var particleLifespans;
 
-// limits
-var maxFireworkParticles = 1000;
+// constraints
+var maxFireworkParticles = 30000;
 var maxParticleCountPerExplosion = 500;
-var minParticleCountPerExplosion = 200;
 var minParticleSlotsFreeBeforeSpawn = 20;
-var maxParticleVelocity = 4;
+var maxParticleVelocity = 3;
 var minParticleVelocity = 1;
+var minParticleLifespan = 70;
+var maxParticleLifespan = 200;
 var maxParticleRadius = 20;
 
 // environment
-var gravityAcc = 0.03;
+var gravityAcc = 0.02;
 
 window.onload = function(e) {
 
@@ -100,8 +101,13 @@ function update() {
       if (!particlePositions[i]) slotsToPopulate.push(i);
     }
 
+    if (slotsToPopulate.length < minParticleSlotsFreeBeforeSpawn) {
+      return;
+    }
+
     var positionX = Math.random() * WIDTH;
     var positionY = Math.random() * HEIGHT;
+    var lifespan = minParticleLifespan + Math.random() * (maxParticleLifespan - minParticleLifespan);
 
     for (var i = 0; i < slotsToPopulate.length; i++) {
 
@@ -117,12 +123,10 @@ function update() {
         Math.sin(angle) * (minParticleVelocity + Math.random() * (maxParticleVelocity - minParticleVelocity))
       );
 
-      particleLifespans[slotsToPopulate[i]] = 100;
+      particleLifespans[slotsToPopulate[i]] = lifespan;
 
     }
-
   }
-
 }
 
 function render(c) {
@@ -132,15 +136,16 @@ function render(c) {
   c.globalAlpha = 0.05;
   c.fillRect(0, 0, WIDTH, HEIGHT);
   c.globalAlpha = 1;
-
   c.fillStyle = "white";
+
+  // draw particles
   for (var i = 0; i < maxFireworkParticles; i++) {
 
     if (particlePositions[i]) {
 
       c.globalAlpha = Math.min(1, particleLifespans[i] / 60);
       c.beginPath();
-      c.arc(particlePositions[i].x, particlePositions[i].y, Math.min(maxParticleRadius, particleLifespans[i] / 60), 0, 2 * Math.PI);
+      c.arc(particlePositions[i].x, particlePositions[i].y, Math.min(maxParticleRadius, Math.max(0, particleLifespans[i] / 60)), 0, 2 * Math.PI);
       c.fill();
       c.closePath();
       c.globalAlpha = 1;
