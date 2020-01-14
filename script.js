@@ -15,14 +15,15 @@ var particleLifespans;
 
 // limits
 var maxFireworkParticles = 1000;
-var maxParticleCountPerExplosion = 200;
-var minParticleCountPerExplosion = 100;
+var maxParticleCountPerExplosion = 500;
+var minParticleCountPerExplosion = 200;
 var minParticleSlotsFreeBeforeSpawn = 20;
 var maxParticleVelocity = 4;
 var minParticleVelocity = 1;
+var maxParticleRadius = 20;
 
 // environment
-var gravityAcc = 0.02;
+var gravityAcc = 0.03;
 
 window.onload = function(e) {
 
@@ -139,7 +140,7 @@ function render(c) {
 
       c.globalAlpha = Math.min(1, particleLifespans[i] / 60);
       c.beginPath();
-      c.arc(particlePositions[i].x, particlePositions[i].y, Math.min(10, particleLifespans[i] / 60), 0, 2 * Math.PI);
+      c.arc(particlePositions[i].x, particlePositions[i].y, Math.min(maxParticleRadius, particleLifespans[i] / 60), 0, 2 * Math.PI);
       c.fill();
       c.closePath();
       c.globalAlpha = 1;
