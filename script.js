@@ -1,3 +1,16 @@
+// point data type
+var Vector2 = function(x, y) {
+  this.x = x;
+  this.y = y;
+}
+
+// firework particle data
+var maxFireworkParticles = 50;
+var fireworkParticlePositions;
+var fireworkParticleVelocities;
+var fireworkParticleLifespans;
+var gravityAcc = 2;
+
 window.onload = function(e) {
 
     // canvas setup
@@ -18,7 +31,14 @@ window.onload = function(e) {
     window.requestAnimationFrame(loop, canvas);
 }
 
-function init(c) {}
+function init(c) {
+
+  // initialize firework particle data
+  fireworkParticlePositions = new Array(maxFireworkParticles);
+  fireworkParticleVelocities = new Array(maxFireworkParticles);
+  fireworkParticleLifespans = new Array(maxFireworkParticles);
+
+}
 
 function update() {}
 
