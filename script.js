@@ -116,7 +116,7 @@ function update() {
         positionY
       );
 
-      // spawn with velacities at different angles
+      // spawn with velocities at different angles
       var angle = Math.PI * 2 * (i / slotsToPopulate.length);
       particleVelocities[slotsToPopulate[i]] = new Vector2(
         Math.cos(angle) * (minParticleVelocity + Math.random() * (maxParticleVelocity - minParticleVelocity)),
